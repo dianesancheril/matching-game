@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/matching-game/static/css/main.7ae8f24a.css",
+    "main.css": "/matching-game/static/css/main.b0a875ff.css",
     "main.js": "/matching-game/static/js/main.2e0d6e51.js",
     "static/js/787.f0488d0e.chunk.js": "/matching-game/static/js/787.f0488d0e.chunk.js",
     "index.html": "/matching-game/index.html",
-    "main.7ae8f24a.css.map": "/matching-game/static/css/main.7ae8f24a.css.map",
+    "main.b0a875ff.css.map": "/matching-game/static/css/main.b0a875ff.css.map",
     "main.2e0d6e51.js.map": "/matching-game/static/js/main.2e0d6e51.js.map",
     "787.f0488d0e.chunk.js.map": "/matching-game/static/js/787.f0488d0e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7ae8f24a.css",
+    "static/css/main.b0a875ff.css",
     "static/js/main.2e0d6e51.js"
   ]
 }
