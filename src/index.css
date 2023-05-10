@@ -41,8 +41,3 @@ code {
   width: 230px;
   border-radius: 5px;
 }
-
-.card-show {
-  visibility: visible;
-  background-color: blue;
-}

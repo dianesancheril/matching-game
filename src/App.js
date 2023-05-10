@@ -1,13 +1,65 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useReducer } from 'react';
 import './App.css';
 import Card from './Card.js';
+import Score from './Score';
 
+export const ACTIONS = {
+  ADD_PLAY: 'add-play',
+  COMPARE_PLAYS: 'compare-plays',
+  CLEAR_PLAYS: 'clear-plays',
+  INCREMENT: 'increment'
+}
+
+
+export function scoreReducer(score1, action) {
+  switch (action.type) {
+    case ACTIONS.INCREMENT:
+      return score1++;
+  }
+}
+
+//Reducer function to keep a record of the plays two at a time for comparison
+export function playsReducer(currentPlays, action) {
+  switch (action.type) {
+      case ACTIONS.ADD_PLAY:
+          currentPlays = [...currentPlays, newPlay(action.payload.value)];
+          if (currentPlays.length === 2) {
+            if (currentPlays[0].value === currentPlays[1].value) {
+              //currentPlays = [];
+              return currentPlays;
+            }
+          }
+          return currentPlays;
+      // case ACTIONS.COMPARE_PLAYS:
+      //   if (currentPlays[0].value === currentPlays[1].value) {
+      //     //action.payload.match = true;
+      //     return currentPlays;
+      //   } else {
+      //     //action.payload.match = false;
+      //     return false;
+      //   }
+      case ACTIONS.CLEAR_PLAYS:
+          currentPlays = [];
+          return currentPlays;
+      default:
+          return currentPlays;
+  }
+}
+
+//Adds value of current card to currentPlays array. This function is called from the reducer function
+function newPlay(value) {
+  return { value: value}
+}
 
 function App() {
   const [cardFront, setCardFront] = useState([0])
   const [cardBack, setCardBack] = useState([])
+  const [currentPlays, dispatch] = useReducer(playsReducer, [])
+  const [score1, dispatch1] = useReducer(scoreReducer, 0);
+  const [score2, setScore2] = useState(0);
   const fetchedRef = useRef(false);
-  const [currentPlayer, setCurrentPlayer] = useState()
+
+
 
   const fetchData = async () => {
     try {
@@ -40,6 +92,7 @@ function App() {
   };
 
 
+
   useEffect(() => {
     if(fetchedRef.current) return;
     fetchedRef.current = true;
@@ -47,6 +100,7 @@ function App() {
   }, [])
 
 
+  console.log('CP', currentPlays);
   return (
     <>
     <div className="title">
@@ -54,9 +108,18 @@ function App() {
         Memory game
       </h1>
     </div>
+    <div className='score1'>
+      <span>Player 1: </span>
+
+      <span>{score1}</span>
+    </div>
+    <div className='score2'>
+      <span>Player 2: </span>
+      <Score cp={currentPlays}/>
+    </div>
     <div className="container">
       { cardFront?.map((k, index) => (
-        <Card key={index} value={cardBack} i={index}/>
+        <Card key={index} value={cardBack} idx={index} dispatch={dispatch} cp={currentPlays} score1={score1} dispatch1={dispatch1}/>
       ))
       }
     </div>
